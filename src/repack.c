@@ -161,6 +161,11 @@ void repack_boot(repack_data_t* data)
 		verbose("File '%s' is GZIP file !",ramdisk_file);	
 	}
 		
+	if(data->keep_mtk_header) {
+	  kernel_is_mtk_file = 1;
+	  ramdisk_is_mtk_file = 1;
+	}
+
 	// Update image header from configuration	
 	kernel_size=file_size(data->kernel);
 	img_cfg.header.kernel_size=kernel_size + ( kernel_is_mtk_file ? 0 : sizeof(mtk_header_t) );
@@ -457,6 +462,8 @@ void repack_parse_args(repack_data_t* data, args_t* args)
 				strcpy(data->config,args->argv[++i]);
 			}else if ((!strcmp(args->argv[i],"--no-compress")) || (!strcmp(args->argv[i],"-n"))){
 				data->no_compress=true;		
+			}else if ((!strcmp(args->argv[i],"--keep-mtk-header")) || (!strcmp(args->argv[i],"-m"))){
+				data->keep_mtk_header=true;			
 			}else if ((!strcmp(args->argv[i],"--compress-rate")) || (!strcmp(args->argv[i],"-z"))){
 				if ((i+1)>=args->argc) die("Argument needed after option '%s' !",args->argv[i]);
 				data->compress_rate=strtol(args->argv[++i],NULL,10);				

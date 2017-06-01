@@ -46,6 +46,7 @@ typedef struct repack_data_t{
 	char			config[PATH_MAX_SIZE];		//!< Configuration input filename
 	char			logos[PATH_MAX_SIZE];		//!< Logos input directory	
 	bool			no_compress;				//!< Do not compress ramdisk, use ramdisk as file instread
+	bool			keep_mtk_header;				//!< Keep MTK head on kernel and ramdisk files
 	int				compress_rate;				//!< gzip compression rate (0-9)
 }repack_data_t;
 
